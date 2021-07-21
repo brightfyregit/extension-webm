@@ -19,7 +19,7 @@ class WebmPlayer extends Bitmap
 {
 	static inline var BYTES_PER_SAMPLE = 4 * 8192;
 	static var BLANK_BYTES:ByteArray;
-	public var SKIP_STEP_LIMIT = 0;
+	static var SKIP_STEP_LIMIT = 0;
 
 	public var frameRate(default, null):Float;
 	public var duration(default, null):Float;
@@ -41,6 +41,8 @@ class WebmPlayer extends Bitmap
 	var lastDecodedVideoFrame2 = 0.0;
 	var fkingElapsed = 0.0;
 	var wasHitOnce = false;
+	
+	var vidInfo:Array<Float> = [];
 	
 	public function new()
 	{
@@ -66,10 +68,10 @@ class WebmPlayer extends Bitmap
 
 		webmDecoder = hx_webm_decoder_create(io.io, soundEnabled);
 		
-		var info = hx_webm_decoder_get_info(webmDecoder);
-		bitmapData = new BitmapData(info[0].int(), info[1].int(), false, 0);
-		frameRate = info[2];
-		duration = info[3];
+		vidInfo = hx_webm_decoder_get_info(webmDecoder);
+		bitmapData = new BitmapData(Std.int(vidInfo[0]), Std.int(vidInfo[1]), false, 0);
+		frameRate = vidInfo[2];
+		duration = vidInfo[3];
 
 		if (soundEnabled)
 		{
@@ -232,10 +234,10 @@ class WebmPlayer extends Bitmap
 		}
 		else
 		{
-			vpxDecoder.getAndRenderFrame(bitmapData);
+			vpxDecoder.getAndRenderFrame(bitmapData, vidInfo);
 		}
 		} else {
-		vpxDecoder.getAndRenderFrame(bitmapData);
+		vpxDecoder.getAndRenderFrame(bitmapData, vidInfo);
 		}
 	}
 	
