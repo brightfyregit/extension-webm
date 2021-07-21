@@ -29,7 +29,7 @@ class VpxDecoder
 		hx_vpx_codec_decode(context, data);
 	}
 	
-	public function getAndRenderFrame(bitmapData:BitmapData)
+	public function getAndRenderFrame(bitmapData:BitmapData, vidInf:Array<Float>)
 	{
 		var info = hx_vpx_codec_get_frame(context);
 		
@@ -46,7 +46,7 @@ class VpxDecoder
 			}
 			else
 			{
-				var newImage:Image = new Image(null, 0, 0, Std.int(vidInf[0]), Std.int(vidInf[1]));
+				var newImage:Image = new Image(null, 0, 0, Std.int(vidInf[0]), Std.int(vidInf[1]);
 				var newImageBuffer:ImageBuffer = newImage.buffer;
 				newImageBuffer.data.buffer = Bytes.ofData(info[2]);
 				newImageBuffer.format = ARGB32;
