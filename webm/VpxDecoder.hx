@@ -6,6 +6,9 @@ import haxe.io.BytesData;
 import openfl.display.BitmapData;
 import openfl.utils.ByteArray;
 
+import lime.graphics.Image;
+import lime.graphics.ImageBuffer;
+
 class VpxDecoder
 {	
 	public static var version(get, null):String;
